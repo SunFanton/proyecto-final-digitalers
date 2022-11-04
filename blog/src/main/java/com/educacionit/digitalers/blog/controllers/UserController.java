@@ -51,7 +51,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 			return ResponseEntity.status(400).body(responseMessageService.getResponseMessage(MessageType.BAD_REQUEST,
 					"credential [" + uuid + "] No encontrada"));
 		}
-		if (!loginService.validateLogin(uuid)) {
+		if (loginService.validateLogin(uuid) == null) {
 			return ResponseEntity.status(409).body(responseMessageService
 					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
 		}
@@ -67,7 +67,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 					"credential [" + uuid + "] No encontrada"));
 		}
 
-		if (!loginService.validateLogin(uuid)) {
+		if (loginService.validateLogin(uuid) == null) {
 			return ResponseEntity.status(409).body(responseMessageService
 					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
 		}
@@ -81,7 +81,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 			return ResponseEntity.status(400).body(responseMessageService.getResponseMessage(MessageType.BAD_REQUEST,
 					"credential [" + uuid + "] No encontrada"));
 		}
-		if (!loginService.validateLogin(uuid)) {
+		if (loginService.validateLogin(uuid) == null) {
 			return ResponseEntity.status(409).body(responseMessageService
 					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
 		}

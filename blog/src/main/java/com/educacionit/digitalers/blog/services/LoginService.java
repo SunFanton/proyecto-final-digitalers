@@ -8,10 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.educacionit.digitalers.blog.entities.Login;
+import com.educacionit.digitalers.blog.entities.User;
+import com.educacionit.digitalers.blog.repositories.UserRepository;
 
 @Service
 public class LoginService {
@@ -24,6 +27,9 @@ public class LoginService {
 	private String type;
 	@Value("${login.credential}")
 	private String credential;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	public Login getLogin(String email) {
 		UUID uuid = UUID.randomUUID();
@@ -34,12 +40,12 @@ public class LoginService {
 		return login;
 	}
 
-	public Boolean validateLogin(String uuidHeader) {
+	public User validateLogin(String uuidHeader) {
 		UUID uuid = null;
 		try {
 			uuid = UUID.fromString(uuidHeader);
 		} catch (IllegalArgumentException e) {
-			return false;
+			return null;
 		}
 		Login login = loggedUsers.get(uuid);
 
@@ -52,11 +58,12 @@ public class LoginService {
 			logger.info(login.getCreationDate() + " - " + now + " : " + timeSession);
 			if (timeSession <= expiresIn) {
 				login.setCreationDate(now);
-				return true;
+				User user = userRepository.findByEmail(loggedUsers.get(uuid).getEmail()).orElse(null);
+				return user;
 			}
 			loggedUsers.remove(uuid);
 		}
-		return false;
+		return null;
 	}
 
 }

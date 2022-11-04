@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +40,13 @@ public class User {
 	@Column(columnDefinition = "TINYINT DEFAULT 0", insertable = false, updatable = true)
 	private Byte failedAttemps;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Publication> publications;
-
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", key=" + key + ", active=" + active + ", creationDate="
+				+ creationDate + ", failedAttemps=" + failedAttemps + "]";
+	}
+	
 }
