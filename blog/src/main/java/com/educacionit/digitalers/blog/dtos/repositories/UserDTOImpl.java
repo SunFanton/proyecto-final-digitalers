@@ -17,11 +17,9 @@ import com.educacionit.digitalers.blog.entities.User;
 import com.educacionit.digitalers.blog.repositories.UserRepository;
 import com.octaviorobleto.commons.utilities.text.CodeUtils;
 
-
 @Component
 public class UserDTOImpl implements GenericRepositoryDTO<UserDTO, Long> {
 	private static Logger logger = LogManager.getLogger();
-	
 	@Value("${database.key}")
 	private String KEY_AES;
 

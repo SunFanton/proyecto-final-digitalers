@@ -1,8 +1,8 @@
 package com.educacionit.digitalers.blog.entities;
 
-import java.awt.TrayIcon.MessageType;
-
 import org.springframework.stereotype.Component;
+
+import com.educacionit.digitalers.blog.enums.MessageType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

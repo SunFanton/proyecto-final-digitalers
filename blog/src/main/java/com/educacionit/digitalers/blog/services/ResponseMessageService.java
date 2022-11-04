@@ -10,7 +10,7 @@ import com.educacionit.digitalers.blog.enums.MessageType;
 
 @Service
 public class ResponseMessageService {
-	public ResponseMessage getResponseMessage(MessageType mensaje, Object object) {
+	public ResponseMessage getResponseMessage(MessageType messageType, Object object) {
 		String description = null;
 
 		if (object instanceof String) {
@@ -22,6 +22,6 @@ public class ResponseMessageService {
 					.collect(Collectors.joining(", "));
 		}
 
-		return ResponseMessage.builder().description(description).build();
+		return ResponseMessage.builder().messageType(messageType).description(description).build();
 	}
 }
