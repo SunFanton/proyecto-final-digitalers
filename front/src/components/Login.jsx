@@ -1,6 +1,8 @@
 import React from "react";
 import { Component } from "react";
-
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import '../resources/css/login.css';
 
 export default class Login extends Component {
     constructor(props) {
@@ -11,9 +13,10 @@ export default class Login extends Component {
         }
     }
 
+
     setValues = (event) => {
         this.setState({
-            [event.target.id]: event.target.value
+            [event.target.name]: event.target.value
         });
     }
 
@@ -52,12 +55,13 @@ export default class Login extends Component {
                 console.log(json);
                 localStorage.uuid = json.uuid;
                 localStorage.credential = json.credential;
+                localStorage.userId = json.id;
                 window.location.href="/publications";
             })
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
-                alert("Credenciales Incorrectas");
+                alert("Credenciales incorrectas");
             });
         this.cleanValues();
     }
@@ -66,34 +70,55 @@ export default class Login extends Component {
 
     render() {
         return (
-            <>
-                <form onSubmit={this.signIn}>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="correo electronico"
-                        required={true}
-                        value={this.state.email}
-                        onChange={this.setValues}
+            <div>
+               <Form className="formLogin" onSubmit={this.signIn}>
+                    <Form.Group className="mb-3 formInputs" controlId="formBasicEmail">
+                        <Form.Label>Email </Form.Label>
+                        <Form.Control
+                            type="email"
+                            controlid="email"
+                            name="email"
+                            className="input"
+                            size="lg"
+                            placeholder="Ingresa tu email"
+                            required={true}
+                            value={this.state.email}
+                            onChange={this.setValues} />
+                    </Form.Group>
 
-                    />
 
-                    <input
-                        type="password"
-                        id="key"
-                        name="key"
-                        placeholder="clave"
-                        required={true}
-                        value={this.state.key}
-                        onChange={this.setValues}
-                    />
-                    <div>
-                        <button type="submit">Ingresar</button>
-                        <button type="reset" onClick={this.cleanValues}>Limpiar</button>
-                    </div>
-                </form>
-            </>
+                    <Form.Group className="mb-3 formInputs" controlId="formBasicPassword">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control
+                            type="password"
+                            controlid="key"
+                            name="key"
+                            className="input"
+                            size="lg"
+                            placeholder="Ingresa tu contraseña"
+                            required={true}
+                            value={this.state.key}
+                            onChange={this.setValues} />
+                    </Form.Group>
+                   
+
+                    <Button 
+                        variant="primary"  
+                        type="submit"
+                        className="formButton"
+                        size="lg">
+                        Ingresar
+                    </Button>
+                    <Button 
+                        variant="secondary"     
+                        type="reset" 
+                        className="formButton"
+                        size="lg"
+                        onClick={this.cleanValues}>
+                        Limpiar
+                    </Button>
+                </Form>
+            </div>
         );
     }
 }

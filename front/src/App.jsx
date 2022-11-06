@@ -3,6 +3,10 @@ import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import NotFound from "./components/NotFound";
 import './resources/css/menu.css';
+import './resources/css/app.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NewPublication from "./components/NewPublication";
+import PublicationsList from "./components/PublicationsList";
 
 export default class App extends Component {
 
@@ -16,27 +20,26 @@ export default class App extends Component {
 
     render() {
         return (
-            <BrowserRouter>
+            <div>
+                <BrowserRouter>
 
-                <nav class="menu">
-                    <NavLink className="enlace" to="/" >Principal</NavLink>
-
-                    <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
-
-                    <NavLink className="enlace" to="/comments" >Comentarios</NavLink>
-                </nav>
+                    <nav className="menu">
+                        <NavLink className="enlace" to="/" >Principal</NavLink>
+                        <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
+                        <NavLink className="enlace" to="/create-publication" >Crear Publicacion</NavLink>
+                    </nav>
 
 
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/publications" element={<div>Publicaciones</div>} />
-                    <Route path="/comments" element={<button onClick={this.printUUID}>Mostrar UUID</button>} />
-                    <Route path="*" element={<NotFound />} />
-                    <Route />
-                </Routes>
+                    <Routes>
+                        <Route path="/" element={<Login />} />
+                        <Route path="/publications" element={<PublicationsList />} />
+                        <Route path="/create-publication" element={<NewPublication />} />
+                        <Route path="*" element={<NotFound />} />
+                        <Route />
+                    </Routes>
 
-            </BrowserRouter>
-
+                </BrowserRouter>
+            </div>
         );
     }
 }

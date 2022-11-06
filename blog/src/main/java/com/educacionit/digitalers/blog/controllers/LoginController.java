@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.educacionit.digitalers.blog.services.ResponseMessageService;
 import com.octaviorobleto.commons.utilities.text.CodeUtils;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(value = { "/login" }, produces = { MediaType.APPLICATION_JSON_VALUE })
 public class LoginController {
 	private static Logger logger = LogManager.getLogger();

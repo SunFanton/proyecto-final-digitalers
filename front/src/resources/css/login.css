@@ -7,9 +7,8 @@ div {
     width: 100%;
 }
 
-.formPost {
-    width: 80%;
-    height: 50%;
+.formLogin {
+    width: 50%;
     padding: 32px;
     margin-top: 100px;
     background-color: rgb(201, 201, 201,0.6);
@@ -21,5 +20,4 @@ div {
     font-size: 24px;
     font-weight: bold;
     width: 100%;
-    overflow: auto;
 }
