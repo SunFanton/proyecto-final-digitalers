@@ -25,4 +25,5 @@ public final class Login {
 	private String credential;
 	@JsonIgnore
 	private String email;
+	private Long id;
 }

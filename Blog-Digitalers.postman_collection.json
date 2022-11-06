@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f4aaa877-f415-4636-bea5-e00f9f1ab0b4",
+		"_postman_id": "fde63f7b-67ee-46db-aa6e-58a8bd261a26",
 		"name": "Blog-Digitalers",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -13,7 +13,8 @@
 					"script": {
 						"exec": [
 							"var res = JSON.parse(responseBody);\r",
-							"pm.collectionVariables.set(\"UUID_DESA\",res.uuid);"
+							"pm.collectionVariables.set(\"UUID_DESA\",res.uuid);\r",
+							"pm.collectionVariables.set(\"USER_ID_PUBLICATIONS\",res.id);"
 						],
 						"type": "text/javascript"
 					}
@@ -220,25 +221,6 @@
 			"response": []
 		},
 		{
-			"name": "FindByUserId (Publication)",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{PATH_PRINCIPAL}}/publications/findByUserId/2",
-					"host": [
-						"{{PATH_PRINCIPAL}}"
-					],
-					"path": [
-						"publications",
-						"findByUserId",
-						"2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "insertPublication",
 			"request": {
 				"method": "POST",
@@ -251,7 +233,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"Publicacion sobre PYTHON\",\r\n    \"body\": \"Python es un lenguaje de programacion que se utiliza, entre otras cosas, para web backend\"\r\n}",
+					"raw": "{\r\n    \"title\": \"Publicacion sobre Java\",\r\n    \"body\": \"Java es un lenguaje de programacion que se utiliza, entre otras cosas, para web backend\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -289,13 +271,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{PATH_PRINCIPAL}}/publications/findByUserId",
+					"raw": "{{PATH_PRINCIPAL}}/publications/findByUserId/{{USER_ID_PUBLICATIONS}}",
 					"host": [
 						"{{PATH_PRINCIPAL}}"
 					],
 					"path": [
 						"publications",
-						"findByUserId"
+						"findByUserId",
+						"{{USER_ID_PUBLICATIONS}}"
 					]
 				}
 			},
@@ -330,6 +313,11 @@
 		},
 		{
 			"key": "UUID_DESA",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "USER_ID_PUBLICATIONS",
 			"value": "",
 			"type": "default"
 		}
