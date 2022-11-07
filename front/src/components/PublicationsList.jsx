@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
-import Card from 'react-bootstrap/Card';
+import Publication from './Publication';
 
 export default class PublicationsList extends Component{
 
@@ -49,12 +49,12 @@ export default class PublicationsList extends Component{
                 {
                     this.state.publications.map(
                         item => (
-                            <Card key={item.id}>
-                                <Card.Body>
-                                    <Card.Title>{item.title}</Card.Title>
-                                    <Card.Text>{item.body}</Card.Text>
-                                </Card.Body>
-                            </Card>
+                            <Publication 
+                                key={item.id}
+                                id={item.id}
+                                title={item.title}
+                                body={item.body}
+                            />
                         )
                     )
                 }

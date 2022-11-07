@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.educacionit.digitalers.blog.dtos.UserDTO;
 import com.educacionit.digitalers.blog.entities.Publication;
 import com.educacionit.digitalers.blog.entities.User;
 import com.educacionit.digitalers.blog.enums.MessageType;
@@ -67,14 +67,24 @@ public class PublicationController implements GenericRestController<Publication,
 		return save(publication,bindingResult);
 	}
 
-	public ResponseEntity<?> update(String uuid, @Valid Publication publication, BindingResult bindingResult) {
+	@DeleteMapping(value = { "/delete/{id}" })
+	public ResponseEntity<?> deleteById(String uuid, @PathVariable(name = "id") Long id) {
+		
+		logger.info("credential :" + uuid);
 
-		return null;
-	}
-
-	public ResponseEntity<?> delete(String uuid, @Valid Publication publication, BindingResult bindingResult) {
-
-		return null;
+		if (uuid == null) {
+			return ResponseEntity.status(400).body(responseMessageService.getResponseMessage(MessageType.BAD_REQUEST,
+					"credential [" + uuid + "] No encontrada"));
+		}
+		User user = loginService.validateLogin(uuid);
+		if (user == null) {
+			return ResponseEntity.status(409).body(responseMessageService
+					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
+		}
+		
+		publicationRepository.deleteById(id);
+		
+		return ResponseEntity.ok(new String("Publicacion eliminada"));
 	}
 
 	public ResponseEntity<?> findAll() {
@@ -93,6 +103,17 @@ public class PublicationController implements GenericRestController<Publication,
 		return ResponseEntity.ok(publications);
 	}
 	
+	//NO IMPLEMENTADOS-----------------------------------------------
+	
+	public ResponseEntity<?> update(String uuid, @Valid Publication publication, BindingResult bindingResult) {
+
+		return null;
+	}
+	
+	public ResponseEntity<?> delete(String uuid, @Valid Publication t, BindingResult bindingResult) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	//--------------------------------------------------------
 	
