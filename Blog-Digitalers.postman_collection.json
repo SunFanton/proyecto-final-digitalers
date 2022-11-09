@@ -312,15 +312,23 @@
 						"type": "default"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 5,\r\n    \"title\": \"Publicacion sobre PYTHON\",\r\n    \"body\": \"Python es un lenguaje de programacion que se utiliza, entre otras cosas, para web backend\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{PATH_PRINCIPAL}}/publications/delete/1",
+					"raw": "{{PATH_PRINCIPAL}}/publications/delete",
 					"host": [
 						"{{PATH_PRINCIPAL}}"
 					],
 					"path": [
 						"publications",
-						"delete",
-						"1"
+						"delete"
 					]
 				}
 			},

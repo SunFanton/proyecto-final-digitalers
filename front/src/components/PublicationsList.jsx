@@ -2,6 +2,8 @@ import React from 'react';
 import { Component } from 'react';
 import Publication from './Publication';
 
+import Swal from 'sweetalert2'
+
 export default class PublicationsList extends Component{
 
     constructor(props) {
@@ -35,8 +37,16 @@ export default class PublicationsList extends Component{
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
-                alert("Error al obtener las publicaciones. Intenta ingresar de nuevo");
-                window.location.href="/";
+                Swal.fire({
+                    title: 'Error al obtener las publicaciones. Inicia sesion se nuevo',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    if (result['isConfirmed']){
+                        window.location.href="/";
+                    }
+                })
+                
             })
             .finally(() => console.info(this.state.publications));
     }

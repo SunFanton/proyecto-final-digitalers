@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../resources/css/form.css';
 
+import Swal from 'sweetalert2'
+
 export default class NewPublication extends Component{
 
     constructor(props) {
@@ -59,8 +61,16 @@ export default class NewPublication extends Component{
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
-                alert("Error al realizar la publicacion. Inicia sesion de nuevo");
-                window.location.href="/";
+                Swal.fire({
+                    title: 'Error al crear publicacion. Inicia sesion de nuevo',
+                    icon: 'info',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    if (result['isConfirmed']){
+                        window.location.href="/";
+                    }
+                })
+                
             });
         this.cleanValues();
     }
@@ -93,21 +103,23 @@ export default class NewPublication extends Component{
                         />
                     </Form.Group>
 
-                    <Button 
-                        variant="primary"  
-                        type="submit"
-                        className="formButton"
-                        size="lg">
-                        Publicar
-                    </Button>
-                    <Button 
-                        variant="secondary"     
-                        type="reset" 
-                        className="formButton"
-                        size="lg"
-                        onClick={this.cleanValues}>
-                        Limpiar
-                    </Button>
+                    <span className='publish-buttons'>
+                        <Button 
+                            variant="secondary"     
+                            type="reset" 
+                            className="formButton"
+                            size="lg"
+                            onClick={this.cleanValues}>
+                            Limpiar
+                        </Button>
+                        <Button 
+                            variant="primary"  
+                            type="submit"
+                            className="formButton"
+                            size="lg">
+                            Publicar
+                        </Button>
+                    </span>
                 </Form>
 
 

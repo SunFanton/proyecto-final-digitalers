@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.educacionit.digitalers.blog.entities.Publication;
 import com.educacionit.digitalers.blog.entities.User;
 import com.educacionit.digitalers.blog.enums.MessageType;
+import com.educacionit.digitalers.blog.exceptions.ExceptionDTO;
 import com.educacionit.digitalers.blog.repositories.PublicationRepository;
 import com.educacionit.digitalers.blog.services.LoginService;
 import com.educacionit.digitalers.blog.services.ResponseMessageService;
@@ -67,25 +68,6 @@ public class PublicationController implements GenericRestController<Publication,
 		return save(publication,bindingResult);
 	}
 
-	@DeleteMapping(value = { "/delete/{id}" })
-	public ResponseEntity<?> deleteById(String uuid, @PathVariable(name = "id") Long id) {
-		
-		logger.info("credential :" + uuid);
-
-		if (uuid == null) {
-			return ResponseEntity.status(400).body(responseMessageService.getResponseMessage(MessageType.BAD_REQUEST,
-					"credential [" + uuid + "] No encontrada"));
-		}
-		User user = loginService.validateLogin(uuid);
-		if (user == null) {
-			return ResponseEntity.status(409).body(responseMessageService
-					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
-		}
-		
-		publicationRepository.deleteById(id);
-		
-		return ResponseEntity.ok(new String("Publicacion eliminada"));
-	}
 
 	public ResponseEntity<?> findAll() {
 		List<Publication> publications = publicationRepository.findAll();
@@ -103,18 +85,44 @@ public class PublicationController implements GenericRestController<Publication,
 		return ResponseEntity.ok(publications);
 	}
 	
-	//NO IMPLEMENTADOS-----------------------------------------------
 	
-	public ResponseEntity<?> update(String uuid, @Valid Publication publication, BindingResult bindingResult) {
+	public ResponseEntity<?> delete(String uuid, @Valid Publication publication, BindingResult bindingResult) {
+		logger.info("credential :" + uuid);
 
-		return null;
+		if (uuid == null) {
+			return ResponseEntity.status(400).body(responseMessageService.getResponseMessage(MessageType.BAD_REQUEST,
+					"credential [" + uuid + "] No encontrada"));
+		}
+		if (loginService.validateLogin(uuid) == null) {
+			return ResponseEntity.status(409).body(responseMessageService
+					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
+		}
+		if (bindingResult.hasErrors()) {
+			return ResponseEntity.status(400)
+					.body(responseMessageService.getResponseMessage(MessageType.VALIDATION_ERROR, bindingResult));
+		}
+
+		try {
+			publicationRepository.findById(publication.getId()).orElse(null);
+		} catch (Exception e) {
+			logger.error(e);
+			return ResponseEntity.status(404).body(
+					responseMessageService.getResponseMessage(MessageType.NO_ELEMENTS, " No encontrado"));
+		}
+
+		publicationRepository.delete(publication);
+
+		return ResponseEntity.ok(
+				responseMessageService.getResponseMessage(MessageType.DELETE_ELEMENT, "Publicacion eliminada correctamente"));
 	}
 	
-	public ResponseEntity<?> delete(String uuid, @Valid Publication t, BindingResult bindingResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	//NO IMPLEMENTADO-----------------------------------------------
 	
+		public ResponseEntity<?> update(String uuid, @Valid Publication publication, BindingResult bindingResult) {
+
+			return null;
+		}
+		
 	//--------------------------------------------------------
 	
 	private ResponseEntity<?> save(Publication publication, BindingResult bindingResult) {

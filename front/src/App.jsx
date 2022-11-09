@@ -8,6 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NewPublication from "./components/NewPublication";
 import PublicationsList from "./components/PublicationsList";
 
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
+
 export default class App extends Component {
 
     constructor(props) {
@@ -16,6 +19,21 @@ export default class App extends Component {
     
     printUUID=()=>{
         console.log(localStorage);
+    }
+
+    logOut = () => {
+        if(localStorage.length>0){
+            Swal.fire({
+                title: '¿Desea cerrar sesion?',
+                icon: 'info',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result['isConfirmed']){
+                    localStorage.clear();
+                    window.location.href="/";
+                }
+            })
+        }
     }
 
     render() {
@@ -27,6 +45,7 @@ export default class App extends Component {
                         <NavLink className="enlace" to="/" >Principal</NavLink>
                         <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
                         <NavLink className="enlace" to="/create-publication" >Crear Publicacion</NavLink>
+                        <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
                     </nav>
 
 

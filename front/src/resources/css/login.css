@@ -21,3 +21,9 @@ div {
     font-weight: bold;
     width: 100%;
 }
+
+.div-login-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}

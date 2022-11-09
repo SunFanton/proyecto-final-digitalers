@@ -23,3 +23,9 @@ div {
     width: 100%;
     overflow: auto;
 }
+
+.publish-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}

@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../resources/css/login.css';
 
+import Swal from 'sweetalert2'
+
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -61,7 +63,12 @@ export default class Login extends Component {
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
-                alert("Credenciales incorrectas");
+                Swal.fire({
+                    title: 'Credenciales incorrectas. Intenta de nuevo',
+                    icon: 'warning',
+                    confirmButtonText: 'Ok'
+                })
+                
             });
         this.cleanValues();
     }
@@ -101,22 +108,23 @@ export default class Login extends Component {
                             onChange={this.setValues} />
                     </Form.Group>
                    
-
-                    <Button 
-                        variant="primary"  
-                        type="submit"
-                        className="formButton"
-                        size="lg">
-                        Ingresar
-                    </Button>
-                    <Button 
-                        variant="secondary"     
-                        type="reset" 
-                        className="formButton"
-                        size="lg"
-                        onClick={this.cleanValues}>
-                        Limpiar
-                    </Button>
+                    <span className="div-login-buttons">
+                        <Button 
+                            variant="secondary"     
+                            type="reset" 
+                            className="formButton"
+                            size="lg"
+                            onClick={this.cleanValues}>
+                            Limpiar
+                        </Button>
+                        <Button 
+                            variant="primary"  
+                            type="submit"
+                            className="formButton"
+                            size="lg">
+                            Ingresar
+                        </Button>
+                    </span>
                 </Form>
             </div>
         );
