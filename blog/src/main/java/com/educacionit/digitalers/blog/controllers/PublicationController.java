@@ -39,6 +39,7 @@ public class PublicationController implements GenericRestController<Publication,
 	@Autowired
 	private LoginService loginService;
 
+	//Obtener publicacion por id de publicacion
 	public ResponseEntity<?> findById(Long id) {
 
 		logger.info("ID : " + id);
@@ -51,6 +52,7 @@ public class PublicationController implements GenericRestController<Publication,
 		return ResponseEntity.ok(publication);
 	}
 
+	//Insertar nueva publicacion
 	public ResponseEntity<?> insert(String uuid, @Valid Publication publication, BindingResult bindingResult) {
 		logger.info("credential :" + uuid);
 
@@ -69,12 +71,14 @@ public class PublicationController implements GenericRestController<Publication,
 	}
 
 
+	//Obtener todas las publicaciones
 	public ResponseEntity<?> findAll() {
 		List<Publication> publications = publicationRepository.findAll();
 		logger.info(publications);
 		return ResponseEntity.ok(publications);
 	}
 
+	//Obtener todas las publicaciones por id de usuario
 	@GetMapping(value = { "/findByUserId/{user_id}" })
 	public ResponseEntity<?> findAll(@PathVariable(name = "user_id") Long userId) {
 		
@@ -85,7 +89,7 @@ public class PublicationController implements GenericRestController<Publication,
 		return ResponseEntity.ok(publications);
 	}
 	
-	
+	//Eliminar una publicacion
 	public ResponseEntity<?> delete(String uuid, @Valid Publication publication, BindingResult bindingResult) {
 		logger.info("credential :" + uuid);
 
@@ -116,12 +120,24 @@ public class PublicationController implements GenericRestController<Publication,
 				responseMessageService.getResponseMessage(MessageType.DELETE_ELEMENT, "Publicacion eliminada correctamente"));
 	}
 	
-	//NO IMPLEMENTADO-----------------------------------------------
-	
-		public ResponseEntity<?> update(String uuid, @Valid Publication publication, BindingResult bindingResult) {
+	//Actualizar una publicacion
+	public ResponseEntity<?> update(String uuid, @Valid Publication publication, BindingResult bindingResult) {
 
-			return null;
+		logger.info("credential :" + uuid);
+
+		if (uuid == null) {
+			return ResponseEntity.status(400).body(responseMessageService.getResponseMessage(MessageType.BAD_REQUEST,
+					"credential [" + uuid + "] No encontrada"));
 		}
+		User user = loginService.validateLogin(uuid);
+		if (user == null) {
+			return ResponseEntity.status(409).body(responseMessageService
+					.getResponseMessage(MessageType.VALIDATION_ERROR, "credential [" + uuid + "] No encontrada"));
+		}
+
+		publication.setUser(user);
+		return save(publication,bindingResult);
+	}
 		
 	//--------------------------------------------------------
 	

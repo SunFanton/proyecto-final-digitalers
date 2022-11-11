@@ -272,36 +272,6 @@
 			"response": []
 		},
 		{
-			"name": "FindPublicationByuserID",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"uuid\": \"e60ed782-3823-4dee-9e3d-050c7f808820\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{PATH_PRINCIPAL}}/publications/findByUserId",
-					"host": [
-						"{{PATH_PRINCIPAL}}"
-					],
-					"path": [
-						"publications",
-						"findByUserId"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "DeletePublication",
 			"request": {
 				"method": "DELETE",
@@ -329,6 +299,66 @@
 					"path": [
 						"publications",
 						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePublication",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "credential",
+						"value": "{{UUID_DESA}}",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Python\",\r\n    \"body\": \"Python es un lenguajde de programacion muy utulizado en ciencia de datos e inteligencia artificial.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PATH_PRINCIPAL}}/publications/update",
+					"host": [
+						"{{PATH_PRINCIPAL}}"
+					],
+					"path": [
+						"publications",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InserUserWithoutUUID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user6@gmail.com\",\r\n    \"key\": \"1234\",\r\n    \"active\": \"true\",\r\n    \"message\": \"Nuevo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{PATH_PRINCIPAL}}/users/insertNewUser",
+					"host": [
+						"{{PATH_PRINCIPAL}}"
+					],
+					"path": [
+						"users",
+						"insertNewUser"
 					]
 				}
 			},

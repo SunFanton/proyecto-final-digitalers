@@ -36,16 +36,24 @@ export default class App extends Component {
         }
     }
 
+    isLocalStorageEmpty(){
+        if(localStorage.getItem("uuid") && localStorage.getItem("userId") && localStorage.getItem("credential")) {
+            return <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
+        }
+        else {
+            return <NavLink className="enlace" to="/" >Principal</NavLink>
+        }
+    }
+
     render() {
         return (
             <div>
                 <BrowserRouter>
 
                     <nav className="menu">
-                        <NavLink className="enlace" to="/" >Principal</NavLink>
+                        {this.isLocalStorageEmpty()}
                         <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
                         <NavLink className="enlace" to="/create-publication" >Crear Publicacion</NavLink>
-                        <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
                     </nav>
 
 

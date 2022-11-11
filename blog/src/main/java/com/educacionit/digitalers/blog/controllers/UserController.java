@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,7 +59,18 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 
 		return save(userDTO, bindingResult);
 	}
+	
+	//------------------------------------------------------
+	
+	//METODO CONFLICTIVO
+	@PostMapping(value = {"/insertNewUser"}, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> insertNewUser(@Valid UserDTO userDTO, BindingResult bindingResult) {
+		logger.info("User: " + userDTO.getEmail());
+		return save(userDTO, bindingResult);
+	}
 
+	//------------------------------------------------------
+	
 	public ResponseEntity<?> update(String uuid, @Valid UserDTO userDTO, BindingResult bindingResult) {
 		logger.info("credential :" + uuid);
 

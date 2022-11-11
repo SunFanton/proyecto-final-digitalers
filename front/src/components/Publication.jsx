@@ -2,12 +2,14 @@ import React from 'react';
 import { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faFolder, faPencil } from "@fortawesome/free-solid-svg-icons";
 import '../resources/css/publication.css';
 
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
+import UpdatePublication from './UpdatePublication';
 
 
 export default class Publication extends Component{
@@ -17,8 +19,32 @@ export default class Publication extends Component{
         this.state = {
             id: this.props.id,
             title: this.props.title,
-            body: this.props.body
+            body: this.props.body,
+            showUpdate: false
         }
+    }
+
+    showEdit = () => {
+        if(this.state.showUpdate){
+            return <Modal.Dialog>
+                        <Modal.Body>
+                            <UpdatePublication 
+                                id={this.state.id}
+                                title={this.state.title}
+                                body={this.state.body}
+                                closeModal={this.closeModal}
+                            />
+                        </Modal.Body>
+                    </Modal.Dialog>
+        }
+    }
+
+    updatePublication = (event) => {
+        this.setState({ showUpdate: true })
+    }
+
+    closeModal = () => {
+        this.setState({ showUpdate: false })
     }
 
     deletePublication = (event) => {
@@ -79,6 +105,8 @@ export default class Publication extends Component{
     render() {
         return(
             <>
+                {this.showEdit()}
+
                 <Card className="card" key={this.state.id}>
                     <Card.Body className="cardBody">
                         <Card.Title className="cardTitle">
@@ -94,6 +122,9 @@ export default class Publication extends Component{
                     <div className="buttonsCard">
                         <Button variant="danger" onClick={this.deletePublication}>
                             <FontAwesomeIcon icon={faTrash} />
+                        </Button>
+                        <Button variant="primary" onClick={this.updatePublication}>
+                            <FontAwesomeIcon icon={faPencil} />
                         </Button>
                     </div>
                 </Card>

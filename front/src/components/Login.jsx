@@ -73,12 +73,15 @@ export default class Login extends Component {
         this.cleanValues();
     }
 
-
+    register= (event) => {
+       
+        this.cleanValues();
+    }
 
     render() {
         return (
             <div>
-               <Form className="formLogin" onSubmit={this.signIn}>
+                <Form className="formLogin" >
                     <Form.Group className="mb-3 formInputs" controlId="formBasicEmail">
                         <Form.Label>Email </Form.Label>
                         <Form.Control
@@ -107,25 +110,35 @@ export default class Login extends Component {
                             value={this.state.key}
                             onChange={this.setValues} />
                     </Form.Group>
-                   
-                    <span className="div-login-buttons">
-                        <Button 
-                            variant="secondary"     
-                            type="reset" 
+
+                    <span className="div-login-buttons">   
+                        <Button
+                            variant="primary"
+                            className="formButton register"
+                            size="lg"
+                            type="submit"
+                            onClick={this.register}>
+                            Registrarse
+                        </Button>
+                        <Button
+                            variant="secondary"
+                            type="reset"
                             className="formButton"
                             size="lg"
                             onClick={this.cleanValues}>
                             Limpiar
                         </Button>
-                        <Button 
-                            variant="primary"  
+                        <Button
+                            variant="primary"
                             type="submit"
                             className="formButton"
-                            size="lg">
+                            size="lg"
+                            onClick={this.signIn}>
                             Ingresar
                         </Button>
                     </span>
                 </Form>
+                    
             </div>
         );
     }
