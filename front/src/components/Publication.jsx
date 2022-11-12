@@ -95,7 +95,8 @@ export default class Publication extends Component{
                     show={this.state.showUpdate}
                     centered
                     size="lg"
-                    aria-labelledby="modal-update">
+                    aria-labelledby="modal-update"
+                    variant="secondary">
                         <Modal.Body>
                             <UpdatePublication 
                                 id={this.state.id}

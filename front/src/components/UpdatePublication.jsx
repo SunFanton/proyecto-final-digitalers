@@ -83,7 +83,7 @@ export default class UpdatePublication extends Component{
         return(
             <div className="formUpdate">
                 <Form className="formUpdate" onSubmit={this.post}>
-                    <CloseButton onClick={this.props.closeModal}/>
+                    <CloseButton variant="white" onClick={this.props.closeModal}/>
                     <Form.Group className="mb-3 formInputs" controlId="title">
                         <Form.Label>Titulo</Form.Label>
                         <Form.Control
