@@ -25,21 +25,6 @@ export default class Publication extends Component{
         }
     }
 
-    /*showEdit = () => {
-        if(this.state.showUpdate){
-            return <Modal.Dialog>
-                        <Modal.Body>
-                            <UpdatePublication 
-                                id={this.state.id}
-                                title={this.state.title}
-                                body={this.state.body}
-                                closeModal={this.closeModal}
-                            />
-                        </Modal.Body>
-                    </Modal.Dialog>
-        }
-    }*/
-
     updatePublication = (event) => {
         this.setState({ showUpdate: true })
     }

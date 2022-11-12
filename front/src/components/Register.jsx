@@ -66,15 +66,17 @@ export default class Register extends Component {
                 if (!response.ok) throw Error(response.status);
                 Swal.fire({
                     title: '¡Registro exitoso!',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
+                    icon: 'success'
                 })
                 return response.json();
             }
             )
             .then(json => {
                 console.log(json);
-                window.location.href="/";
+                setTimeout(()=>{
+                    window.location.href="/";
+                },2000)
+                
             })
             .catch(error => {
                 console.error(error);

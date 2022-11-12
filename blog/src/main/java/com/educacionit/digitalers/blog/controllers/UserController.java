@@ -39,6 +39,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 	@Autowired
 	private LoginService loginService;
 
+	//Obtener usuario por ID
 	public ResponseEntity<?> findById(Long id) {
 		logger.info("ID : " + id);
 		try {
@@ -51,6 +52,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 		}
 	}
 
+	//Insertar nuevo usuario (UUID requerido)
 	public ResponseEntity<?> insert(String uuid, @Valid UserDTO userDTO, BindingResult bindingResult) {
 		logger.info("credential :" + uuid);
 
@@ -66,8 +68,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 		return save(userDTO, bindingResult);
 	}
 	
-	//------------------------------------------------------
-	
+	//Insertar nuevo usuario (UUID no requerido)
 	@PostMapping(value = {"/insertNewUser"}, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> insertNewUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
 		logger.info("User: " + userDTO.getEmail());
@@ -82,8 +83,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 		}
 	}
 
-	//------------------------------------------------------
-	
+	//Actualizar usuario
 	public ResponseEntity<?> update(String uuid, @Valid UserDTO userDTO, BindingResult bindingResult) {
 		logger.info("credential :" + uuid);
 
@@ -99,6 +99,7 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 		return save(userDTO, bindingResult);
 	}
 
+	//Eliminar usuario
 	public ResponseEntity<?> delete(String uuid, @Valid UserDTO userDTO, BindingResult bindingResult) {
 		logger.info("credential :" + uuid);
 
@@ -130,10 +131,13 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 						+ " eliminado correctamente");
 	}
 
+	//Obtener todos los usuarios
 	public ResponseEntity<?> findAll() {
 		return ResponseEntity.ok(userDTOImpl.findAll());
 	}
 
+	//-----------------------------------------------------------------------------
+	
 	private ResponseEntity<?> save(UserDTO userDTO, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return ResponseEntity.status(400)

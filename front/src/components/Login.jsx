@@ -11,7 +11,8 @@ export default class Login extends Component {
         super(props);
         this.state = {
             email: "",
-            key: ""
+            key: "",
+            attemps: 3
         }
     }
 
@@ -63,8 +64,14 @@ export default class Login extends Component {
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
+                if(this.state.attemps > 0)
+                    this.setState(
+                        {
+                            attemps: this.state.attemps - 1
+                        }
+                );
                 Swal.fire({
-                    title: 'Credenciales incorrectas. Intenta de nuevo',
+                    title: 'Credenciales incorrectas. Te quedan ' + this.state.attemps + ' intentos',
                     icon: 'warning',
                     confirmButtonText: 'Ok'
                 })
