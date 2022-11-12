@@ -6,12 +6,13 @@ import '../resources/css/login.css';
 
 import Swal from 'sweetalert2'
 
-export default class Login extends Component {
+export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
             email: "",
-            key: ""
+            key: "",
+            repeatKey: ""
         }
     }
 
@@ -26,18 +27,31 @@ export default class Login extends Component {
         this.setState(
             {
                 email: "",
-                key: ""
+                key: "",
+                repeatKey: ""
             }
         );
     }
 
-    signIn = (event) => {
+    register = (event) => {
         event.preventDefault();
 
-        const url = "http://localhost:8080/login/signIn";
+        if(this.state.key !== this.state.repeatKey){
+            this.cleanValues();
+            Swal.fire({
+                title: 'Las contraseñas deben ser iguales',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+            return;
+        }
+
+        const url = "http://localhost:8080/users/insertNewUser";
         const user = {
             email: this.state.email,
-            key: this.state.key
+            key: this.state.key,
+            active: true,
+            message: "New User"
         }
         const header = {
             method: "POST",
@@ -50,31 +64,28 @@ export default class Login extends Component {
         fetch(url, header)
             .then(response => {
                 if (!response.ok) throw Error(response.status);
+                Swal.fire({
+                    title: '¡Registro exitoso!',
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                })
                 return response.json();
             }
             )
             .then(json => {
                 console.log(json);
-                localStorage.uuid = json.uuid;
-                localStorage.credential = json.credential;
-                localStorage.userId = json.id;
-                window.location.href="/publications";
+                window.location.href="/";
             })
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
                 Swal.fire({
-                    title: 'Credenciales incorrectas. Intenta de nuevo',
+                    title: 'Error de registro. Intenta de nuevo con otro email' ,
                     icon: 'warning',
                     confirmButtonText: 'Ok'
                 })
                 
             });
-        this.cleanValues();
-    }
-
-    register= (event) => {
-       
         this.cleanValues();
     }
 
@@ -93,8 +104,7 @@ export default class Login extends Component {
                             placeholder="Ingresa tu email"
                             required={true}
                             value={this.state.email}
-                            onChange={this.setValues} 
-                        />
+                            onChange={this.setValues} />
                     </Form.Group>
 
 
@@ -109,8 +119,21 @@ export default class Login extends Component {
                             placeholder="Ingresa tu contraseña"
                             required={true}
                             value={this.state.key}
-                            onChange={this.setValues} 
-                        />
+                            onChange={this.setValues} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3 formInputs" controlId="formBasicPassword">
+                        <Form.Label>Repite contraseña</Form.Label>
+                        <Form.Control
+                            type="password"
+                            controlid="repeatKey"
+                            name="repeatKey"
+                            className="input"
+                            size="lg"
+                            placeholder="Ingresa tu contraseña"
+                            required={true}
+                            value={this.state.repeatKey}
+                            onChange={this.setValues} />
                     </Form.Group>
 
                     <span className="div-login-buttons">
@@ -127,8 +150,8 @@ export default class Login extends Component {
                             type="submit"
                             className="formButton"
                             size="lg"
-                            onClick={this.signIn}>
-                            Ingresar
+                            onClick={this.register}>
+                            Registrar
                         </Button>
                     </span>
                 </Form>

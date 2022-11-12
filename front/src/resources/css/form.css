@@ -17,11 +17,27 @@ div {
     border-radius: 50px;
 }
 
+.formUpdate {
+    width: 95%;
+    height: 80%;
+    margin: auto;
+    background-color: rgb(201, 201, 201,0.6);
+    border: none;
+    padding: 15px;
+}
+
 .formInputs {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     width: 100%;
     overflow: auto;
+}
+
+.formInputsText {
+    font-size: 21px;
+    width: 100%;
+    overflow: auto;
+    text-align: justify;
 }
 
 .publish-buttons {

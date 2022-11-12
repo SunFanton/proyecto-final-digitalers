@@ -1,11 +1,15 @@
 .menu {
     overflow: hidden;
     background-color: #107fc0 ;
+    display: flex;
+    justify-content: center;
+    margin: auto;
 }
 
 .enlace {
     float: left;
-    display: block;
+    display: flex;
+    margin: auto;
     color: #f2f2f2;
     text-align: center;
     padding: 12px 16px;

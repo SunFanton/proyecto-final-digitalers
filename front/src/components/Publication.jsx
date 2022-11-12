@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faFolder, faPencil } from "@fortawesome/free-solid-svg-icons";
 import '../resources/css/publication.css';
+import '../resources/css/modal.css';
 
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
@@ -24,7 +25,7 @@ export default class Publication extends Component{
         }
     }
 
-    showEdit = () => {
+    /*showEdit = () => {
         if(this.state.showUpdate){
             return <Modal.Dialog>
                         <Modal.Body>
@@ -37,7 +38,7 @@ export default class Publication extends Component{
                         </Modal.Body>
                     </Modal.Dialog>
         }
-    }
+    }*/
 
     updatePublication = (event) => {
         this.setState({ showUpdate: true })
@@ -105,7 +106,20 @@ export default class Publication extends Component{
     render() {
         return(
             <>
-                {this.showEdit()}
+                <Modal 
+                    show={this.state.showUpdate}
+                    centered
+                    size="lg"
+                    aria-labelledby="modal-update">
+                        <Modal.Body>
+                            <UpdatePublication 
+                                id={this.state.id}
+                                title={this.state.title}
+                                body={this.state.body}
+                                closeModal={this.closeModal}
+                            />
+                        </Modal.Body>
+                    </Modal>
 
                 <Card className="card" key={this.state.id}>
                     <Card.Body className="cardBody">

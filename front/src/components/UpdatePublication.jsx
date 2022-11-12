@@ -82,7 +82,7 @@ export default class UpdatePublication extends Component{
     render() {
         return(
             <div className="formUpdate">
-                <Form className="formPost" onSubmit={this.post}>
+                <Form className="formUpdate" onSubmit={this.post}>
                     <CloseButton onClick={this.props.closeModal}/>
                     <Form.Group className="mb-3 formInputs" controlId="title">
                         <Form.Label>Titulo</Form.Label>
@@ -93,6 +93,8 @@ export default class UpdatePublication extends Component{
                             placeholder="Titulo de la publicacion"
                             value={this.state.title}
                             onChange={this.setValues}
+                            className="formInputsText"
+                            required={true}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3 formInputs" controlId="body">
@@ -105,6 +107,8 @@ export default class UpdatePublication extends Component{
                             value={this.state.body}
                             onChange={this.setValues}
                             placeholder="Escribe la publicacion..."
+                            className="formInputsText"
+                            required={true}
                         />
                     </Form.Group>
 

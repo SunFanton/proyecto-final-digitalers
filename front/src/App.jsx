@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import NotFound from "./components/NotFound";
 import './resources/css/menu.css';
 import './resources/css/app.css';
@@ -38,10 +39,21 @@ export default class App extends Component {
 
     isLocalStorageEmpty(){
         if(localStorage.getItem("uuid") && localStorage.getItem("userId") && localStorage.getItem("credential")) {
-            return <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
+            return (
+                <>
+                    <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
+                    <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
+                    <NavLink className="enlace" to="/create-publication" >Crear Publicacion</NavLink>
+                </>
+            )
         }
         else {
-            return <NavLink className="enlace" to="/" >Principal</NavLink>
+            return (
+            <>
+                <NavLink className="enlace" to="/register" >Registrar</NavLink>
+                <NavLink className="enlace" to="/" >Iniciar sesion</NavLink>
+            </>
+            )
         }
     }
 
@@ -52,13 +64,12 @@ export default class App extends Component {
 
                     <nav className="menu">
                         {this.isLocalStorageEmpty()}
-                        <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
-                        <NavLink className="enlace" to="/create-publication" >Crear Publicacion</NavLink>
                     </nav>
 
 
                     <Routes>
                         <Route path="/" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
                         <Route path="/publications" element={<PublicationsList />} />
                         <Route path="/create-publication" element={<NewPublication />} />
                         <Route path="*" element={<NotFound />} />

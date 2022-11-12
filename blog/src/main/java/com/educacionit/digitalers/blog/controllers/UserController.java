@@ -9,13 +9,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educacionit.digitalers.blog.dtos.UserDTO;
 import com.educacionit.digitalers.blog.dtos.repositories.UserDTOImpl;
+import com.educacionit.digitalers.blog.entities.User;
 import com.educacionit.digitalers.blog.enums.MessageType;
 import com.educacionit.digitalers.blog.exceptions.ExceptionDTO;
+import com.educacionit.digitalers.blog.repositories.UserRepository;
 import com.educacionit.digitalers.blog.services.LoginService;
 import com.educacionit.digitalers.blog.services.ResponseMessageService;
 
@@ -26,6 +29,9 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 
 	@Autowired
 	private UserDTOImpl userDTOImpl;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private ResponseMessageService responseMessageService;
@@ -62,11 +68,18 @@ public class UserController implements GenericRestController<UserDTO, Long> {
 	
 	//------------------------------------------------------
 	
-	//METODO CONFLICTIVO
 	@PostMapping(value = {"/insertNewUser"}, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> insertNewUser(@Valid UserDTO userDTO, BindingResult bindingResult) {
+	public ResponseEntity<?> insertNewUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
 		logger.info("User: " + userDTO.getEmail());
-		return save(userDTO, bindingResult);
+		
+		User user = userRepository.findByEmail(userDTO.getEmail()).orElse(null);
+		
+		if(user == null)
+			return save(userDTO, bindingResult);
+		else {
+			return ResponseEntity.status(409).body(responseMessageService
+					.getResponseMessage(MessageType.EXISTING_USER, "El usuario ya existe"));
+		}
 	}
 
 	//------------------------------------------------------

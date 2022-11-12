@@ -88,6 +88,8 @@ export default class NewPublication extends Component{
                             placeholder="Titulo de la publicacion" 
                             value={this.state.title}
                             onChange={this.setValues}
+                            className="formInputsText"
+                            required={true}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3 formInputs" controlId="body">
@@ -100,6 +102,8 @@ export default class NewPublication extends Component{
                             value={this.state.body}
                             onChange={this.setValues}
                             placeholder="Escribe la publicacion..."
+                            className="formInputsText"
+                            required={true}
                         />
                     </Form.Group>
 
