@@ -62,12 +62,14 @@ export default class App extends Component {
     render() {
         return (
             <div>
+                
                 <BrowserRouter>
 
                     <nav className="menu">
                         {this.isLocalStorageEmpty()}
                     </nav>
 
+                    <h1 className="main-title">BLOG DIGITALERS</h1>
 
                     <Routes>
                         <Route path="/" element={<Login />} />

@@ -71,32 +71,40 @@ export default class Register extends Component {
 
         fetch(url, header)
             .then(response => {
-                if (!response.ok) throw Error(response.status);
-                Swal.fire({
-                    title: '¡Registro exitoso!',
-                    icon: 'success'
-                })
                 return response.json();
             }
             )
             .then(json => {
                 console.log(json);
-                setTimeout(()=>{
-                    window.location.href="/";
-                },2000)
+                if(json.email) {
+                    Swal.fire({
+                        title: '¡Registro exitoso!',
+                        icon: 'success'
+                    })
+                    setTimeout(()=>{
+                        window.location.href="/";
+                    },2000)
+                }
+                else {
+                    localStorage.clear();
+                    Swal.fire({
+                        title: json.description,
+                        icon: 'warning',
+                        confirmButtonText: 'Ok'
+                    })
+                }
                 
             })
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
                 Swal.fire({
-                    title: 'Error de registro. Intenta de nuevo con otro email' ,
+                    title: 'Error de registro' ,
                     icon: 'warning',
                     confirmButtonText: 'Ok'
                 })
                 
             });
-        this.cleanValues();
     }
 
     render() {

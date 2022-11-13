@@ -49,22 +49,31 @@ export default class Login extends Component {
 
         fetch(url, header)
             .then(response => {
-                if (!response.ok) throw Error(response.status);
                 return response.json();
             }
             )
             .then(json => {
                 console.log(json);
-                localStorage.uuid = json.uuid;
-                localStorage.credential = json.credential;
-                localStorage.userId = json.id;
-                window.location.href="/publications";
+                if (!json.uuid) {
+                    Swal.fire({
+                        title: json.description,
+                        icon: 'warning',
+                        confirmButtonText: 'Ok'
+                    })
+                }
+                else {
+                    localStorage.uuid = json.uuid;
+                    localStorage.credential = json.credential;
+                    localStorage.userId = json.id;
+                    window.location.href="/publications";
+                }
+                
             })
             .catch(error => {
                 console.error(error);
                 localStorage.clear();
                 Swal.fire({
-                    title: 'Credenciales incorrectas',
+                    title: 'Error en inicio de sesion',
                     icon: 'warning',
                     confirmButtonText: 'Ok'
                 })
