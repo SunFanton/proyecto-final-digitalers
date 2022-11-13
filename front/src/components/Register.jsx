@@ -36,8 +36,16 @@ export default class Register extends Component {
     register = (event) => {
         event.preventDefault();
 
+        if(this.state.key == "" || this.state.email == "" || this.state.repeatKey == ""){
+            Swal.fire({
+                title: 'No puede haber campos vacios',
+                icon: 'warning',
+                confirmButtonText: 'Ok'
+            })
+            return;
+        }
+
         if(this.state.key !== this.state.repeatKey){
-            this.cleanValues();
             Swal.fire({
                 title: 'Las contraseñas deben ser iguales',
                 icon: 'warning',

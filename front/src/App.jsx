@@ -27,7 +27,9 @@ export default class App extends Component {
             Swal.fire({
                 title: '¿Desea cerrar sesion?',
                 icon: 'info',
-                confirmButtonText: 'Ok'
+                confirmButtonText: 'Ok',
+                cancelButtonText: 'No',
+                showCloseButton: true,
             }).then((result) => {
                 if (result['isConfirmed']){
                     localStorage.clear();
@@ -41,9 +43,9 @@ export default class App extends Component {
         if(localStorage.getItem("uuid") && localStorage.getItem("userId") && localStorage.getItem("credential")) {
             return (
                 <>
-                    <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
                     <NavLink className="enlace" to="/publications" >Publicaciones</NavLink>
                     <NavLink className="enlace" to="/create-publication" >Crear Publicacion</NavLink>
+                    <NavLink className="enlace" onClick={this.logOut}>Cerrar Sesion</NavLink>
                 </>
             )
         }

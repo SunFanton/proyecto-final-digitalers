@@ -64,7 +64,8 @@ export default class NewPublication extends Component{
                 Swal.fire({
                     title: 'Error al crear publicacion. Inicia sesion de nuevo',
                     icon: 'info',
-                    confirmButtonText: 'Ok'
+                    confirmButtonText: 'Ok',
+                    showCloseButton: true,
                 }).then((result) => {
                     if (result['isConfirmed']){
                         window.location.href="/";

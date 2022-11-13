@@ -37,7 +37,9 @@ export default class Publication extends Component{
         Swal.fire({
             title: '¿Desea eliminar esta publicacion?',
             icon: 'info',
-            confirmButtonText: 'Ok'
+            confirmButtonText: 'Ok',
+            cancelButtonText: 'No',
+            showCloseButton: true,
           }).then((result) => {
             if (result['isConfirmed']){
                 
